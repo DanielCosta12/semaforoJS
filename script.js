@@ -1,26 +1,33 @@
-const verde = document.getElementById("verde");
-const vermelho = document.getElementById("vermelho");
-const amarelo = document.getElementById("amarelo");
-const auto = document.getElementById("auto");
+const buttons = document.getElementById("buttons");
 const img = document.getElementById("img");
 const imgVerde = "./assets/verde.png";
 const imgVermelho = "./assets/vermelho.png";
 const imgAmarelo = "./assets/amarelo.png";
+let intervalId = null;
+let corIndex = 0;
 
-function liberado() {
-  img.src = imgVerde;
-}
-function pare() {
-  img.src = imgVermelho;
-}
-function alertar() {
-  img.src = imgAmarelo;
-}
-function automatico() {
-  
-}
+const semaforo = (event) => {
+  // console.log(event.target.id); pega onde foi clicado e pega o id
+  paraAuto();
+  ligar[event.target.id]();
+};
 
-verde.addEventListener("click", () => liberado());
-vermelho.addEventListener("click", () => pare());
-amarelo.addEventListener("click", () => alertar());
-auto.addEventListener("click", () => automatico(setInterval, 1000));
+const proximoIndex = () => (corIndex = corIndex < 2 ? ++corIndex : 0);
+
+const corAuto = () => {
+  const cores = ["vermelho", "verde", "amarelo"];
+  const color = cores[corIndex];
+  ligar[color]();
+  proximoIndex();
+};
+
+const paraAuto = () => {
+  clearInterval(intervalId);
+};
+const ligar = {
+  vermelho: () => (img.src = imgVermelho),
+  amarelo: () => (img.src = imgAmarelo),
+  verde: () => (img.src = imgVerde),
+  auto: () => (intervalId = setInterval(corAuto, 500)),
+};
+buttons.addEventListener("click", semaforo);
