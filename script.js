@@ -15,7 +15,7 @@ const semaforo = (event) => {
 const proximoIndex = () => (corIndex = corIndex < 2 ? ++corIndex : 0);
 
 const corAuto = () => {
-  const cores = ["vermelho", "verde", "amarelo"];
+  const cores = ["vermelho", "amarelo", "verde"];
   const color = cores[corIndex];
   ligar[color]();
   proximoIndex();
